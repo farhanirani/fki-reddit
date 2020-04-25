@@ -1,0 +1,53 @@
+doctype html
+html
+    head
+        title fki-reddit
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css')
+        link(rel="stylesheet", href="style.css")
+
+    body
+        nav.navbar.navbar-expand.navbar-light
+
+            a.navbar-brand(href='/') fki-reddit
+
+            ul.navbar-nav
+                if user
+                    li.nav-item
+                        a.nav-link(href='/posts/add') Create Post
+                else
+                    li.nav-item
+                        a.nav-link(href='/user/signup') Create Post
+
+            ul.navbar-nav.ml-auto
+                if user
+                    li.nav-item.ml-1.my-1.mr-2
+                        button.btn.btn-sm.btn-outline-primary(onclick="location.href = '/posts/myposts';") My Posts
+                    li.nav-item.ml-auto.my-1.mr-1
+                        button.btn.btn-sm.btn-danger(onclick="location.href = '/user/logout';") Logout
+                else
+                    li.nav-item.ml-auto.my-1.mr-1
+                        button.btn.btn-sm.btn-outline-primary(onclick="location.href = '/user/login';") LOGIN
+                    li.nav-item.ml-1.my-1.mr-2
+                        button.btn.btn-sm.btn-primary(onclick="location.href = '/user/signup';") SIGN UP
+
+        
+        .container-fki
+            br
+            //- != messages('message', locals)
+            //- if errors
+            //-     each error, _ in errors
+            //-         div(class="alert alert-danger") #{error.msg}
+            .container
+                .container-normal
+                    br
+                    block content
+                    br
+                hr
+                footer
+                    p Copyright &copy; fki-reddit
+
+script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js')
+script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js')

@@ -1,7 +1,13 @@
-.container-fki {
-    background-color: #DAE0E6;
+
+.alert-error{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }
 
-.container-normal {
-    background-color: white;
+.alert-success_msg{
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
 }
+

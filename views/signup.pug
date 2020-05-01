@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    .container.col-md-8.bg-light
+    .container.col-md-6.bg-light
         br
         .d-flex.justify-content-center
             h3 Sign Up
@@ -12,6 +12,7 @@ block content
                 input.form-control(type='text', placeholder='Enter name', name='name', required='')
             .form-group
                 label(for='email') Email:
+                p.text-secondary Only used for password recovery or exceptional circumstances. Any upcoming feature involving emails will be opt-in.
                 input.form-control(type='email', placeholder='Enter email', name='email', required='')
             .form-group
                 label(for='username') Username:

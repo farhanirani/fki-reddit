@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .container.col-md-6.bg-light
+        br
+        .d-flex.justify-content-center
+            h2 Create Post
+
+        form.was-validated(action="/posts/create" method="POST")
+            .form-group
+                label(for='username') Title:
+                input#username.form-control(type='text', placeholder='A Relevant short title', name='title', required='')
+            .form-group
+                label(for='password') Body:
+                textarea#password.form-control(type='text', placeholder='Post Body', name='body', required='')
+            .d-flex.justify-content-center
+                button.btn.btn-primary.btn-block(type='submit') Submit
+        br

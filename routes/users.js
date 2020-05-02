@@ -21,43 +21,48 @@ router.post('/signup', (req, res) => {
     User.findOne(query, function(err, user){
         if (user) {
             req.flash('danger','Username taken')
-            return res.render('signup')
-        } 
+            res.render('signup')
+        } else {
+            req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+            let errors = req.validationErrors();
+
+            if(errors){
+                res.render('signup', {
+                    errors:errors
+                });
+            } else {
+                let newUser = new User({
+                    name:name,
+                    email:email,
+                    username:username,
+                    password:password
+                })
+        
+                bcrypt.genSalt(10, function(err, salt){
+                    bcrypt.hash(newUser.password, salt, function(err, hash){
+                        if(err){
+                            console.log(err)
+                        }
+                        newUser.password = hash
+                        newUser.save(function(err){ 
+                            if(err) {
+                                console.log(err)
+                                return
+                            } else {
+                                req.flash('success','Registered successfully!!')
+                                res.redirect('/users/login')
+                            }
+                        })
+                    })
+                })
+            }
+
+        }  //end of else user!
     })
 
-    req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
-    let errors = req.validationErrors();
+    
 
-    if(errors){
-        res.render('signup', {
-            errors:errors
-        });
-    } else {
-        let newUser = new User({
-            name:name,
-            email:email,
-            username:username,
-            password:password
-        })
-
-        bcrypt.genSalt(10, function(err, salt){
-            bcrypt.hash(newUser.password, salt, function(err, hash){
-                if(err){
-                    console.log(err)
-                }
-                newUser.password = hash
-                newUser.save(function(err){ 
-                    if(err) {
-                        console.log(err)
-                        return
-                    } else {
-                        req.flash('success','Registered successfully!!')
-                        res.redirect('/users/login')
-                    }
-                })
-            })
-        })
-    }
+    
 })
 
 

@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .container.col-md-6.bg-light
+        br
+        .d-flex.justify-content-center
+            h2 Edit Post
+
+        form.was-validated(action="/posts/edit/"+post._id method="POST")
+            .form-group
+                label Title:
+                input.form-control(type='text', name='title', required='', value=post.title)
+            .form-group
+                label Body:
+                textarea.form-control(type='text', name='body', required='')= post.body
+            .d-flex.justify-content-center
+                button.btn.btn-primary.btn-block(type='submit', value='submit') EDIT
+        br

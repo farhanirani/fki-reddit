@@ -9,11 +9,11 @@ block content
 
         form.was-validated(action="/users/login" method="POST")
             .form-group
-                label(for='username') Username:
-                input#username.form-control(type='text', placeholder='Enter username', name='username', required='')
+                label Username:
+                input.form-control(type='text', placeholder='Enter username', name='username', required='')
             .form-group
-                label(for='password') Password:
-                input#password.form-control(type='password', placeholder='Enter password', name='password', required='')
+                label Password:
+                input.form-control(type='password', placeholder='Enter password', name='password', required='')
             .d-flex.justify-content-center
                 button.btn.btn-primary.btn-block(type='submit') Submit
         p Dont have an account?

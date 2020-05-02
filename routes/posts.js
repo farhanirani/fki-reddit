@@ -7,6 +7,40 @@ let Post = require('../models/post')
 let User = require('../models/user')
 
 
+router.get('/edit/:id',ensureAuthenticated, function(req, res){
+    Post.findById(req.params.id, (err, post) => {
+        if(post.author != req.user._id){
+            req.flash('danger','Not Authorized')
+            return res.redirect('/')
+        }
+        res.render('edit_post', {
+            post: post
+        })
+    })
+})
+
+
+router.post('/edit/:id', (req,res) => {
+    let post = {};
+    post.title = req.body.title
+    post.author = req.user._id
+    post.body = req.body.body
+    
+    let query = { _id:req.params.id }
+
+    Post.updateOne(query, post, (err) => {
+        if(err) {
+            console.log(err)
+            return
+        } else {
+            req.flash('success','Article edited successfully')
+            res.redirect('/')
+        }
+    })
+
+})
+
+
 router.get('/myposts/:uname', ensureAuthenticated, function(req, res){
     
     User.findOne( {username:req.params.uname}, (err, user) => {
@@ -18,9 +52,11 @@ router.get('/myposts/:uname', ensureAuthenticated, function(req, res){
     })
 })
 
+
 router.get('/create', ensureAuthenticated, function(req, res){
     res.render('create_post')
 })
+
 
 router.post('/create', function(req, res){
 
@@ -41,17 +77,6 @@ router.post('/create', function(req, res){
     })
 })
 
-//get single article
-router.get('/:id', function(req, res){
-    Post.findById(req.params.id, function(err, post){
-        User.findById(post.author, function(err, user){
-            res.render('post', {
-                post: post,
-                author: user.name
-            })
-        })
-    })
-})
 
 router.get('/delete/:id', ensureAuthenticated, (req, res) => {
 
@@ -69,6 +94,20 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
         }
     })
 })
+
+
+//get single article
+router.get('/:id', function(req, res){
+    Post.findById(req.params.id, function(err, post){
+        User.findById(post.author, function(err, user){
+            res.render('post', {
+                post: post,
+                author: user.name
+            })
+        })
+    })
+})
+
 
 
 //access control

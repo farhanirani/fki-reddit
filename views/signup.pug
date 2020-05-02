@@ -8,20 +8,20 @@ block content
 
         form.was-validated(action="/users/signup" method="POST")
             .form-group
-                label(for='name') Name:
+                label Name:
                 input.form-control(type='text', placeholder='Enter name', name='name', required='')
             .form-group
-                label(for='email') Email:
+                label Email:
                 p.text-secondary Only used for password recovery or exceptional circumstances. Any upcoming feature involving emails will be opt-in.
                 input.form-control(type='email', placeholder='Enter email', name='email', required='')
             .form-group
-                label(for='username') Username:
+                label Username:
                 input.form-control(type='text', placeholder='Enter username', name='username', required='')
             .form-group
-                label(for='password') Password:
+                label Password:
                 input.form-control(type='password', placeholder='Enter password', name='password', required='')
             .form-group
-                label(for='password2') Confirm Password:
+                label Confirm Password:
                 input.form-control(type='password', placeholder='Confirm Password', name='password2', required='')
             .d-flex.justify-content-center
                 button.btn.btn-primary.btn-block(type='submit') Submit

@@ -7,7 +7,7 @@ let Post = require('../models/post')
 let User = require('../models/user')
 
 
-router.get('/create', function(req, res){
+router.get('/create', ensureAuthenticated, function(req, res){
     res.render('create_post')
 })
 
@@ -41,5 +41,32 @@ router.get('/:id', function(req, res){
         })
     })
 })
+
+router.get('/delete/:id', ensureAuthenticated, (req, res) => {
+
+    Post.findById(req.params.id, (err, post) => {
+        if(post.author != req.user._id){
+            res.status(500).send()
+        }
+        else{
+            Post.findByIdAndDelete(req.params.id, (err) => {
+                console.log(err)
+            })
+            req.flash('primary','Post deleted successfully!')
+            res.redirect('/')
+        }
+    })
+})
+
+
+//access control
+function ensureAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next()
+    } else {
+        req.flash('danger','Please login')
+        res.redirect('/users/login')
+    }
+}
 
 module.exports = router

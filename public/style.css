@@ -11,3 +11,6 @@
     border-color: #d6e9c6;
 }
 
+a {
+    text-decoration: none !important;
+}

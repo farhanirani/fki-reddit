@@ -12,34 +12,34 @@ router.get('/create', function(req, res){
 })
 
 router.post('/create', function(req, res){
-    console.log(req.body.body)
 
-    // //get errors
-    // let errors = req.validationErrors()
+    //new mongodb schema item
+    let post = new Post()
+    post.title = req.body.title
+    post.author = req.user._id
+    post.body = req.body.body
     
-    // if(errors){
-    //     res.render('add',{
-    //         title: 'add article',
-    //         errors:errors
-    //     })
-    // } else {
-    //     //new mongodb schema item
-    //     let article = new Article()
-    //     article.title = req.body.title
-    //     article.author = req.user._id
-    //     article.body = req.body.body
-        
-    //     article.save(function(err){ //to add to db
-    //         if(err) {
-    //             console.log(err)
-    //             return
-    //         } else {
-    //             req.flash('success','Article added')
-    //             res.redirect('/')
-    //         }
-    //     })
-    // }   
+    post.save(function(err){ //to add to db
+        if(err) {
+            console.log(err)
+            return
+        } else {
+            req.flash('success','Post created')
+            res.redirect('/')
+        }
+    })
 })
 
+//get single article
+router.get('/:id', function(req, res){
+    Post.findById(req.params.id, function(err, post){
+        User.findById(post.author, function(err, user){
+            res.render('post', {
+                post: post,
+                author: user.name
+            })
+        })
+    })
+})
 
 module.exports = router

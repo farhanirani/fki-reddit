@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    .container.col-md-10.bg-light
+        br
+        h1= post.title
+        p Written by #{author}
+        br
+        p= post.body
+        if user
+            if user.id == post.author 
+                hr
+                a(href="/post/edit/"+post._id) Edit
+                br
+                br
+                a.btn.btn-danger.delete-post(href="#", data-id=post._id) Delete
+                br
+        br

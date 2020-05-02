@@ -63,9 +63,19 @@ app.get('*', function(req, res, next){
 //END OF COPY PASTA
 
 
+//bring in models
+let Post = require('./models/post')
 
 app.get('/', (req, res) => {
-    res.render('index')
+    Post.find({}, function(err, postsres){
+        if(err){
+            console.log(err)
+        } else {
+            res.render('index',{
+                posts: postsres
+            })
+        }
+    })
 })
 
 

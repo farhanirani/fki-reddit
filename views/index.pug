@@ -2,3 +2,7 @@ extends layout
 
 block content
     p home page
+    ul.list-group
+        each a, _ in posts
+            li.list-group-item
+                a(href="/posts/"+a._id)= a.title

@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    .list-group
+        each a, _ in posts
+            br
+            label
+                a.list-group-item(href="/posts/"+a._id)= a.title

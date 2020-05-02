@@ -23,7 +23,7 @@ html
             ul.navbar-nav.ml-auto
                 if user
                     li.nav-item.mr-1
-                        a.nav-link.text-primary(href="/posts/myposts") My Posts
+                        a.nav-link.text-primary(href="/posts/myposts/"+user.username) My Posts
                     li.nav-item.ml-auto.my-1.mr-1
                         button.btn.btn-sm.btn-danger(onclick="location.href = '/users/logout';") Logout
                 else

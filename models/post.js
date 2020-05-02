@@ -7,7 +7,7 @@ let postSchema = mongoose.Schema({
         required: true
     },
     author:{
-        type: String,
+        type: String, // users id
         required: true
     },
     body:{

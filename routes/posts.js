@@ -7,6 +7,17 @@ let Post = require('../models/post')
 let User = require('../models/user')
 
 
+router.get('/myposts/:uname', ensureAuthenticated, function(req, res){
+    
+    User.findOne( {username:req.params.uname}, (err, user) => {
+        Post.find( {author:user._id} , (err, postsres) => {
+            res.render('my_posts',{
+                posts: postsres
+            })
+        })
+    })
+})
+
 router.get('/create', ensureAuthenticated, function(req, res){
     res.render('create_post')
 })
@@ -50,7 +61,8 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
         }
         else{
             Post.findByIdAndDelete(req.params.id, (err) => {
-                console.log(err)
+                if(err)
+                    console.log(err)
             })
             req.flash('primary','Post deleted successfully!')
             res.redirect('/')

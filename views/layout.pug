@@ -18,7 +18,7 @@ html
                         a.nav-link(href='/posts/create') Create Post
                 else
                     li.nav-item
-                        a.nav-link(href='/users/signup') Create Post
+                        a.nav-link(href='/users/login') Create Post
 
             ul.navbar-nav.ml-auto
                 if user
@@ -28,9 +28,9 @@ html
                         button.btn.btn-sm.btn-danger(onclick="location.href = '/users/logout';") Logout
                 else
                     li.nav-item.ml-auto.my-1.mr-1
-                        button.btn.btn-sm.btn-outline-primary(onclick="location.href = '/users/login';") LOGIN
+                        button.btn.btn-sm.btn-outline-primary.font-weight-bold(onclick="location.href = '/users/login';") LOGIN
                     li.nav-item.ml-1.my-1.mr-2
-                        button.btn.btn-sm.btn-primary(onclick="location.href = '/users/signup';") SIGN UP
+                        button.btn.btn-sm.btn-primary.font-weight-bold(onclick="location.href = '/users/signup';") SIGN UP
 
         
         .bg-secondary

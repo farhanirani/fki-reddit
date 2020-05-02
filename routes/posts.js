@@ -14,9 +14,6 @@ router.get('/create', function(req, res){
 router.post('/create', function(req, res){
     console.log(req.body.body)
 
-    // req.checkBody('title','Title cannot be empty').notEmpty()
-    // // req.checkBody('author','Author cannot be empty').notEmpty()
-    // req.checkBody('body','Body cannot be empty').notEmpty()
     // //get errors
     // let errors = req.validationErrors()
     

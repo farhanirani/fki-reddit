@@ -16,35 +16,67 @@ router.post('/signup', (req, res) => {
     const email = req.body.email
     const username = req.body.username
     const password = req.body.password
-    const password2 = req.body.password2
 
-    let newUser = new User({
-        name:name,
-        email:email,
-        username:username,
-        password:password
+    let query = {username:username}
+    User.findOne(query, function(err, user){
+        if (user) {
+            req.flash('danger','Username taken')
+            return res.render('signup')
+        } 
     })
 
-    newUser.save(function(err){ 
-        if(err) {
-            console.log(err)
-            return
-        } else {
-            console.log('reistered succ')
-            res.redirect('/users/login')
-        }
-    })
+    req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+    let errors = req.validationErrors();
 
+    if(errors){
+        res.render('signup', {
+            errors:errors
+        });
+    } else {
+        let newUser = new User({
+            name:name,
+            email:email,
+            username:username,
+            password:password
+        })
+
+        bcrypt.genSalt(10, function(err, salt){
+            bcrypt.hash(newUser.password, salt, function(err, hash){
+                if(err){
+                    console.log(err)
+                }
+                newUser.password = hash
+                newUser.save(function(err){ 
+                    if(err) {
+                        console.log(err)
+                        return
+                    } else {
+                        req.flash('success','Registered successfully!!')
+                        res.redirect('/users/login')
+                    }
+                })
+            })
+        })
+    }
 })
-
-
-
 
 
 router.get('/login', (req, res) => {
     res.render('login')
 })
 
+router.post('/login', passport.authenticate('local', {
+    successRedirect:'/',
+    failureRedirect:'/users/login',
+    failureFlash: true
+}))
+
+//logout
+router.get('/logout', function(req, res){
+    req.logout()
+    req.flash('success','Logged out.')
+    res.redirect('/')
+})
 
 
 

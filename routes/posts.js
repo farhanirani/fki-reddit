@@ -5,6 +5,7 @@ const router = express.Router()
 let Post = require('../models/post')
 //bring in user models
 let User = require('../models/user')
+let Comment = require('../models/comment')
 
 
 router.get('/edit/:id',ensureAuthenticated, function(req, res){
@@ -100,11 +101,30 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
 router.get('/:id', function(req, res){
     Post.findById(req.params.id, function(err, post){
         User.findById(post.author, function(err, user){
-            res.render('post', {
-                post: post,
-                author: user.name
+            Comment.find({commentpostID:post._id}, (err, commentResults) => {
+                res.render('post', {
+                    post: post,
+                    author: user.name,
+                    comments: commentResults
+                })
             })
         })
+    })
+})
+
+router.post('/addcomment/:id',ensureAuthenticated, (req, res) => {
+    let comment = new Comment()
+    comment.commentpostID = req.params.id
+    comment.body = req.body.commentbody
+    comment.author = req.user.name
+    comment.save(function(err){ //to add to db
+        if(err) {
+            console.log(err)
+            return
+        } else {
+            req.flash('success','comment added')
+            res.redirect('/posts/'+req.params.id)
+        }
     })
 })
 

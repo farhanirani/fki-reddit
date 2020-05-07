@@ -11,9 +11,27 @@ block content
             if user
                 if user.id == post.author 
                     hr
-                    a(href="edit/"+post._id) Edit
+                    a(href="edit/"+post._id) Edit 
+                    a.float-right.text-danger(href="delete/"+post._id) Delete
                     br
-                    br
-                    a.btn.btn-danger.delete-post(href="delete/"+post._id) Delete
-                    br
+            br
+    if user
+        br
+        form(action="/posts/addcomment/"+post._id method="POST")
+            .d-flex.justify-content-between
+                input.col-8.form-control(type='text', placeholder='Enter Comment', name='commentbody', required='')
+                button.col-2.btn.btn-primary(type='submit') Add comment
+    
+    if comments.length
+        br
+        .container.bg-light
+            br
+            h5 Comments
+            br
+            each a, _ in comments
+                .d-flex.justify-content-between.border-top
+                    p #{a.body}
+                    p #{a.author}
+                            
+
             br

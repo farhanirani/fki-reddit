@@ -20,7 +20,7 @@ block content
         form(action="/posts/addcomment/"+post._id method="POST")
             .d-flex.justify-content-between
                 input.col-8.form-control(type='text', placeholder='Enter Comment', name='commentbody', required='')
-                button.col-2.btn.btn-primary(type='submit') Add comment
+                button.col-md-3.btn.btn-primary(type='submit') Add comment
     
     if comments.length
         br

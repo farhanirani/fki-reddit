@@ -67,7 +67,8 @@ app.get('*', function(req, res, next){
 let Post = require('./models/post')
 
 app.get('/', (req, res) => {
-    Post.find({}, function(err, postsres){
+    let query = Post.find( {} ).sort({$natural:-1})
+    query.exec(function(err, postsres){
         if(err){
             console.log(err)
         } else {

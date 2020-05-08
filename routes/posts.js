@@ -45,7 +45,8 @@ router.post('/edit/:id', (req,res) => {
 router.get('/myposts/:uname', ensureAuthenticated, function(req, res){
     
     User.findOne( {username:req.params.uname}, (err, user) => {
-        Post.find( {author:user._id} , (err, postsres) => {
+        let query = Post.find( {author:user._id} ).sort({$natural:-1})
+        query.exec( (err, postsres) => {
             res.render('my_posts',{
                 posts: postsres
             })
@@ -101,7 +102,8 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
 router.get('/:id', function(req, res){
     Post.findById(req.params.id, function(err, post){
         User.findById(post.author, function(err, user){
-            Comment.find({commentpostID:post._id}, (err, commentResults) => {
+            let query = Comment.find( {commentpostID:post._id} ).sort({$natural:-1})
+            query.exec( (err, commentResults) => {
                 res.render('post', {
                     post: post,
                     author: user.name,

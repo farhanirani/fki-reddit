@@ -6,3 +6,7 @@ block content
             br
             label
                 a.list-group-item(href="/posts/"+a._id)= a.title
+                if a.body.length > 50
+                    a.list-group-item.text-muted(href="/posts/"+a._id)= a.body.substr(0,50)+'  . . . .'
+                else
+                     a.list-group-item.text-muted(href="/posts/"+a._id)= a.body
